@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Home Route</title>
+  <meta name="description" content="Fastest way home from Stratford to Carshalton Beeches, live.">
+  <meta name="theme-color" content="#0d1b2a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f4f6f8" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Home Route">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Home Route</h1>
+    <div class="topbar-actions">
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.6a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.5 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1l.4 2.6h4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <button id="goBtn" class="go-btn">
+        <span class="go-main">Get me home</span>
+        <span class="go-sub">Press when you're at Stratford</span>
+      </button>
+    </section>
+
+    <div id="banner" class="banner" hidden></div>
+
+    <section id="summary" class="summary" hidden aria-live="polite"></section>
+
+    <section id="routes" class="routes"></section>
+
+    <section id="meta" class="meta" hidden>
+      <span id="updated">Last updated --:--</span>
+      <button id="refreshBtn" class="refresh-btn">Refresh</button>
+    </section>
+
+    <p class="legend" id="legend" hidden>
+      <span class="badge live">LIVE</span> live prediction ·
+      <span class="badge est">EST</span> live departure, timetable run time ·
+      <span class="badge sched">SCHEDULED</span> timetable only
+    </p>
+
+    <section id="debug" class="debug" hidden>
+      <h2>Raw API responses</h2>
+      <p class="small">Newest first. Keys are hidden. <a href="debug.html">Open the API test page</a></p>
+      <div id="debugList"></div>
+    </section>
+  </main>
+
+  <dialog id="settings" class="settings">
+    <form method="dialog" id="settingsForm">
+      <h2>Settings</h2>
+      <p class="small">Saved only on this device. Keys are never sent anywhere except the API they belong to.</p>
+
+      <label for="rdmKey">Rail Data Marketplace key <span class="small">(for live Southern times)</span></label>
+      <input id="rdmKey" name="rdmKey" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste your consumer key">
+      <p class="small">Free. See the README for how to get one. Without it, Southern legs show SCHEDULED times.</p>
+
+      <label for="tflAppKey">TfL app key <span class="small">(optional)</span></label>
+      <input id="tflAppKey" name="tflAppKey" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Optional">
+
+      <details>
+        <summary>Advanced: use a Huxley2 server instead</summary>
+        <label for="huxleyBase">Huxley2 base URL</label>
+        <input id="huxleyBase" name="huxleyBase" type="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://your-huxley2.example.com">
+        <label for="huxleyToken">Darwin token for that server <span class="small">(optional)</span></label>
+        <input id="huxleyToken" name="huxleyToken" type="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </details>
+
+      <label class="check"><input id="debugToggle" type="checkbox"> Show raw API responses (debug)</label>
+
+      <div class="settings-actions">
+        <button type="button" id="testRail" class="secondary">Test rail key</button>
+        <button type="submit" value="save" class="primary">Save</button>
+      </div>
+      <p id="testResult" class="small" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
